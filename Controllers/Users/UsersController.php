@@ -2,8 +2,8 @@
 
 namespace Gasoline\Controllers\Users;
 
-use Frwoph\Vendors\FrwophResponse\FrwophResponse;
-use Frwoph\Vendors\FrwophView\FrwophView;
+use Frwoph\Vendor\Frwoph\Response\Response;
+use Frwoph\Vendor\Frwoph\View\View;
 use Gasoline\Services\User\UserService;
 
 class UsersController
@@ -26,17 +26,17 @@ class UsersController
     /**
      * View action
      */
-    public function viewAction($id, $format)
+    public function viewAction($id)
     {
         $user = $this->userService->getUser($id);
 
-        $view = new FrwophView();
+        $view = new View();
         $view->setPage('Users/view');
         $view->setLayout('default');
         $view->addValue('user', $user);
         $view->addValue('title_for_layout', 'My super title');
 
-        return new FrwophResponse($view, 200, array('Content-Type: text/html'));
+        return new Response($view, 200, array('Content-Type: text/html'));
     }
 
 }
