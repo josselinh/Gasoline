@@ -22,9 +22,19 @@ class UsersController
     {
         $this->userService = $userService;
     }
+    
+    /**
+     * List all users
+     * @return Response
+     */
+    public function indexAction()
+    {
+        return new Response(new View('Users/index', array('users' => $this->userService->getUsers())));
+    }
 
     /**
      * View action
+     * @return Response
      */
     public function viewAction($id)
     {
@@ -34,9 +44,8 @@ class UsersController
         $view->setPage('Users/view');
         $view->setLayout('default');
         $view->addValue('user', $user);
-        $view->addValue('title_for_layout', 'My super title');
 
-        return new Response($view, 200, array('Content-Type: text/html'));
+        return new Response($view);
     }
 
 }
