@@ -32,4 +32,13 @@ class UserService
         return $this->userRepository->getUser($id);
     }
 
+    /**
+     * Get users
+     * @return Array of User
+     */
+    public function getUsers()
+    {
+        return $this->userRepository->getUsers();
+    }
+
 }

@@ -2,8 +2,12 @@
 
 namespace Gasoline\Repositories\User;
 
+use Frwoph\Vendor\Frwoph\ePdo\ePdo;
 use Gasoline\Models\User\User;
 
+/**
+ * User Repository
+ */
 class UserRepository
 {
 
@@ -14,9 +18,9 @@ class UserRepository
 
     /**
      * Default constructor
-     * @param EnhancedPdo $pdo
+     * @param ePdo $pdo
      */
-    public function __construct($pdo)
+    public function __construct(ePdo $pdo)
     {
         $this->pdo = $pdo;
     }
@@ -40,6 +44,30 @@ class UserRepository
         $user->setEmail($result['email']);
 
         return $user;
+    }
+
+    /**
+     * Get users
+     * @return Array of User
+     */
+    public function getUsers()
+    {
+        $statement = $this->pdo->getPdo()->prepare('SELECT * FROM users');
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        $users = array();
+
+        foreach ($results as $result) {
+            $user = new User();
+            $user->setId($result['id']);
+            $user->setLogin($result['login']);
+            $user->setPassword($result['password']);
+            $user->setEmail($result['email']);
+            $users[] = $user;
+        }
+
+        return $users;
     }
 
 }
